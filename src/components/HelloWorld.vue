@@ -1,50 +1,108 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div class="card">
+    <h3>{{ msg.number }}</h3>
+    <div class="card-body">
+      <div class="card-left">
+        <h4>{{ msg.fromCity }}</h4>
+        <div>出发地</div>
+        <!-- <div>{{ msg.departureTime }}</div> -->
+      </div>
+      <div class="card-center">
+        <!-- <div>{{ msg.number }}</div> -->
+        <div>{{ msg.departureTime }}</div>
+        <el-divider></el-divider>
+        <div>
+          {{ msg.type }} <span>¥{{ msg.price }}</span>
+        </div>
+      </div>
+      <div class="card-right">
+        <h4>{{ msg.targetCity }}</h4>
+        <div>目的地</div>
+        <!-- <div>{{ msg.arrivalTime }}</div> -->
+      </div>
+    </div>
+    <el-button
+      class="btn-del"
+      type="danger"
+      icon="el-icon-delete"
+      @click="dialogFormVisible = true"
+      circle
+    ></el-button>
+
+    <el-dialog title="取消机票" :visible.sync="dialogFormVisible">
+      <el-form :model="msg">
+        <div class="card" style="width: 870px">
+          <div class="card-body">
+            <div class="card-left">
+              <div>{{ msg.fromCity }}</div>
+              <!-- <div>{{dialogData.departureTime}}</div> -->
+            </div>
+            <div class="card-center">
+              <div>航班号：{{ msg.number }}</div>
+              <el-divider></el-divider>
+              <div>状态：{{ msg.status }}</div>
+            </div>
+            <div class="card-right">
+              <div>{{ msg.targetCity }}</div>
+              <!-- <div>{{dialogData.arrivalTime}}</div> -->
+            </div>
+          </div>
+        </div>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirmCancleOrder(msg.id)"
+          >确定取消</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import { api_cancel_order } from "../api/admin.js";
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {
-    msg: String
-  }
-}
+    msg: Object,
+  },
+  data() {
+    return {
+      dialogFormVisible: false,
+    };
+  },
+  methods: {
+    async confirmCancleOrder(oid, index) {
+      console.log("index:");
+      console.log(index);
+      const res = await api_cancel_order(oid);
+      if (res.status == 10000) {
+        this.dialogFormVisible = false;
+        this.$message({
+          message: "取消成功",
+          type: "success",
+        });
+        this.$parent.$router.go(0);
+        // for (const order in this.$parent.orders) {
+        // console.log(order);
+        // }
+        console.log(this.$parent);
+      } else {
+        this.$message({
+          message: res.msg,
+          type: "error",
+        });
+      }
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
-  margin: 40px 0 0;
+  margin: 30px 20px 20px;
+  text-align: left;
 }
 ul {
   list-style-type: none;
@@ -56,5 +114,28 @@ li {
 }
 a {
   color: #42b983;
+}
+.card {
+  width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding-bottom: 30px;
+  margin: 10px;
+  position: relative;
+}
+.card-body {
+  display: flex;
+  align-items: center;
+}
+.card-left,
+.card-center,
+.card-right {
+  width: 100%;
+}
+
+.btn-del {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 </style>
