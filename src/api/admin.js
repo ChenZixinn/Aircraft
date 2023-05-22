@@ -32,9 +32,8 @@ export function api_info() {
 export function api_login(data) {
     console.log(data.username);
     console.log(data.password);
-    return axios.post("/login", {
-        username: data.username,
-        password: data.password
+    return axios.post("/login?username=" + data.username + "&password=" + data.password, {
+
     })
 }
 
@@ -75,7 +74,7 @@ export function api_admin_update(data) {
 // ******************************   机票信息模块
 
 export function api_selectTicket(fromCity, targetCity, departureTime) {
-    return axios.get('/ticket/list/', {
+    return axios.get('/ticket/list', {
         params: {
             fromCity: fromCity,
             targetCity: targetCity,
@@ -93,7 +92,7 @@ export function api_getTicket(x) {
 }
 
 export function api_getALlTicket() {
-    return axios.get('/ticket/list/')
+    return axios.get('/ticket/list')
 }
 
 // ******************************   订单模块
