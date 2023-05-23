@@ -32,7 +32,7 @@ export function api_info() {
 export function api_login(data) {
     console.log(data.username);
     console.log(data.password);
-    return axios.post("/login?username=" + data.username + "&password=" + data.password, {
+    return axios.post("/login?username=" + data.username + "&password=" + data.password + "&remember-me=" + true, {
 
     })
 }
