@@ -29,7 +29,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <h1>请选择您的航班</h1>
+    <h3>请选择您的航班</h3>
 
     <div class="ticket-box"></div>
     <div class="ticket-header"></div>
@@ -116,13 +116,13 @@
 
 <style scoped>
 
-h1{
+h3{
   color: white;
 }
-h3 {
+/* h3 {
   margin: 40px 0 0;
   
-}
+} */
 ul {
   list-style-type: none;
   padding: 0;
@@ -161,7 +161,7 @@ a {
 
 .ticket{
   background: #00000080 ;
-  height: 93vh;
+  min-height: 91vh;
   padding-top: 30px;
   position: relative;
 
@@ -170,8 +170,8 @@ a {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url(../assets/bg.png) no-repeat;
-  background-size: 100% auto;
+  background: url(../assets/bg.png) no-repeat fixed;
+  background-size: 100% 100%;
   top: -30px;
   z-index: -999;
 }
@@ -184,8 +184,14 @@ a {
 .table-data{
   width: 90%;
   margin: 0 auto;
-  height: 60vh;
+  min-height: 60vh;
   border-radius: 10px;
+}
+.el-table .el-table__cell{
+  padding: 8px 0;
+}
+.el-pagination{
+  padding-bottom: 40px;
 }
 
 </style>
@@ -270,6 +276,8 @@ export default {
           message: res.msg,
           type: "error",
         });
+        //todo 
+        //this.$router.replace("/login");
       }
     },
     clear() {
