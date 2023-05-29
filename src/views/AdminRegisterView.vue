@@ -1,5 +1,6 @@
 <template>
   <div class="register-view-box">
+    <h1>加入我们，成为会员</h1>
     <div class="register-view">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="用户" class="font-white">
@@ -38,6 +39,11 @@
   position: absolute;
   top: 30%;
   right: 25%;
+}
+h1{
+  color: white;
+  margin: 0;
+  padding-top: 100px;
 }
 </style>
 <style>
