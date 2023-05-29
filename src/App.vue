@@ -79,7 +79,6 @@ export default {
 
 nav {
   padding: 10px;
-  margin-bottom: 30px;
   background: #42b983;
   display: flex;
   justify-content: space-around;
