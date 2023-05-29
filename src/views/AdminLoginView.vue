@@ -19,11 +19,9 @@
 </template>
 
 <style scoped>
-body {
-  
-}
+
 .login-view-box{
-   height: 95vh;
+   height: 93vh;
    background: #1380d2;
    background-image: url(../assets/bg-login.jpg);
    background-repeat: no-repeat;
