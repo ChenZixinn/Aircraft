@@ -1,21 +1,21 @@
 <template>
   <div class="ticket">
+    <div class="mask"></div>
     <div class="ticket-header">
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="出发地">
+      <el-form ref="form" :inline="true" :model="form" label-width="80px">
+        <el-form-item label="出发地" class="font-white">
           <el-input v-model="form.fromCity"></el-input>
         </el-form-item>
-        <el-form-item label="目的地">
+        <el-form-item label="目的地" class="font-white">
           <el-input v-model="form.targetCity"></el-input>
         </el-form-item>
-        <el-form-item label="出发时间">
+        <el-form-item label="出发时间" class="font-white">
           <el-col :span="11">
             <el-date-picker
               type="date"
               value-format="yyyy-MM-dd HH:mm"
               placeholder="选择日期"
               v-model="form.date1"
-              style="width: 100%"
             ></el-date-picker>
           </el-col>
           <!-- <el-col class="line" :span="2">-</el-col> -->
@@ -29,12 +29,12 @@
         </el-form-item>
       </el-form>
     </div>
-    <h1>This is an Ticket page</h1>
+    <h1>请选择您的航班</h1>
 
     <div class="ticket-box"></div>
     <div class="ticket-header"></div>
-    <div>
-      <el-table :data="data" stripe style="width: 90%">
+    <div class="table-box">
+      <el-table :data="data" stripe class="table-data">
         <el-table-column prop="id" label="航班id" width="100">
         </el-table-column>
         <el-table-column prop="number" label="航班号" width="100">
@@ -55,12 +55,11 @@
               icon="el-icon-plus"
               circle
             ></el-button>
-            <!-- <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button> -->
           </template>
         </el-table-column>
       </el-table>
     </div>
+
     <el-pagination
       background
       layout="prev, pager, next"
@@ -116,8 +115,13 @@
 </template>
 
 <style scoped>
+
+h1{
+  color: white;
+}
 h3 {
   margin: 40px 0 0;
+  
 }
 ul {
   list-style-type: none;
@@ -154,6 +158,41 @@ a {
   top: 10px;
   right: 10px;
 }
+
+.ticket{
+  background: #00000080 ;
+  height: 93vh;
+  padding-top: 30px;
+  position: relative;
+
+}
+.mask{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url(../assets/bg.png) no-repeat;
+  background-size: 100% auto;
+  top: -30px;
+  z-index: -999;
+}
+.table-box{
+  /* display: flex;
+  justify-content: center; */
+  margin-bottom: 20px;
+  
+}
+.table-data{
+  width: 90%;
+  margin: 0 auto;
+  height: 60vh;
+  border-radius: 10px;
+}
+
+</style>
+<style>
+  .font-white .el-form-item__label{
+    color: white  ;
+  }
 </style>
 
 <script>

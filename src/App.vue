@@ -79,7 +79,8 @@ export default {
 
 nav {
   padding: 10px;
-  background: #42b983;
+  /* background: #234296; */
+  background: #116ac9;  
   display: flex;
   justify-content: space-around;
 }
