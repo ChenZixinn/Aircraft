@@ -1,6 +1,7 @@
 <template>
   <div class="ticket">
     <div class="mask"></div>
+    <!-- 搜索头 -->
     <div class="ticket-header">
       <el-form ref="form" :inline="true" :model="form" label-width="80px">
         <el-form-item label="出发地" class="font-white">
@@ -30,9 +31,7 @@
       </el-form>
     </div>
     <h3>请选择您的航班</h3>
-
-    <div class="ticket-box"></div>
-    <div class="ticket-header"></div>
+    <!-- 数据表格 -->
     <div class="table-box">
       <el-table :data="data" stripe class="table-data">
         <el-table-column prop="id" label="航班id" width="100">
@@ -306,7 +305,18 @@ export default {
       });
     },
     async pageChange() {
-      const { data: res } = await api_getTicket(this.nowPage);
+      if (!this.form.fromCity) {
+        this.form.fromCity = null;
+      }
+      if (!this.form.targetCity) {
+        this.form.targetCity = null;
+      }
+      const { data: res } = await api_getTicket(
+        this.form.fromCity,
+        this.form.targetCity,
+        this.form.date1,
+        this.nowPage
+      );
       this.data = res.records;
     },
     buyTicket(index, row) {
