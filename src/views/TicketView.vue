@@ -60,6 +60,7 @@
       </el-table>
     </div>
 
+    <!-- 分页导航 -->
     <el-pagination
       background
       layout="prev, pager, next"
@@ -74,37 +75,31 @@
       >打开嵌套表单的 Dialog</el-button
     > -->
 
-    <el-dialog title="预定机票" :visible.sync="dialogFormVisible">
+    <el-dialog title="预定机票" :visible.sync="dialogFormVisible" width="500px">
       <el-form :model="dialogData">
         <div class="card">
           <div class="card-body">
-            <div class="card-left">
-              <div>{{ dialogData.fromCity }}</div>
-              <!-- <div>{{dialogData.departureTime}}</div> -->
+            <div class="card-row">
+              <div>航班号：<span class="red-font">{{ dialogData.number }}</span></div>
+              <div>出发站：<span class="red-font">{{ dialogData.fromCity }}</span></div>
+              
             </div>
-            <div class="card-center">
-              <div>航班号：{{ dialogData.number }}</div>
-              <el-divider></el-divider>
-              <div>状态：{{ dialogData.status }}</div>
-            </div>
-            <div class="card-right">
-              <div>{{ dialogData.targetCity }}</div>
-              <!-- <div>{{dialogData.arrivalTime}}</div> -->
+            <div class="card-row">
+              <div>登机时间：<span class="red-font">{{ dialogData.departureTime }}</span></div>
+              <div>到达站：<span class="red-font">{{ dialogData.targetCity }}</span></div>
             </div>
           </div>
         </div>
-        <el-form-item label="座位类型">
+        <el-form-item label="座位类型:" class="card">
           <el-radio-group v-model="dialogData.type">
-            <el-radio label="商务座"></el-radio>
-            <el-radio label="一等座"></el-radio>
-            <el-radio label="二等座"></el-radio>
+            <el-radio :label="`商务座(${dialogData.businessClass})`"></el-radio>
+            <el-radio :label="`一等座(${dialogData.firstClass})`"></el-radio>
+            <el-radio :label="`二等座(${dialogData.secondClass})`"></el-radio>
           </el-radio-group>
-          <!-- <el-select v-model="dialogData.type" placeholder="请选择活动区域">
-            <el-option label="商务座" value="business"></el-option>
-            <el-option label="一等座" value="first"></el-option>
-            <el-option label="二等座" value="second"></el-option>
-          </el-select> -->
         </el-form-item>
+        <div class="ma">
+          <img src="../assets/ma.webp" alt="ma">
+        </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -115,13 +110,14 @@
 </template>
 
 <style scoped>
-
-h3{
+.red-font{
+  color: red;
+}
+h3 {
   color: white;
 }
 /* h3 {
   margin: 40px 0 0;
-  
 } */
 ul {
   list-style-type: none;
@@ -135,38 +131,13 @@ a {
   color: #42b983;
 }
 
-.card {
-  width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  padding: 30px 0;
-  margin: 10px auto;
-  position: relative;
-}
-.card-body {
-  display: flex;
-  align-items: center;
-}
-.card-left,
-.card-center,
-.card-right {
-  width: 100%;
-}
-
-.btn-del {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.ticket{
-  background: #00000080 ;
+.ticket {
+  background: #00000080;
   min-height: 91vh;
   padding-top: 30px;
   position: relative;
-
 }
-.mask{
+.mask {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -175,30 +146,72 @@ a {
   top: -30px;
   z-index: -999;
 }
-.table-box{
+.table-box {
   /* display: flex;
   justify-content: center; */
   margin-bottom: 20px;
-  
 }
-.table-data{
+.table-data {
   width: 90%;
   margin: 0 auto;
   min-height: 60vh;
   border-radius: 10px;
 }
-.el-table .el-table__cell{
-  padding: 8px 0;
+
+/* 弹窗 */
+.card-body{
+  display: flex;
+  justify-content: left;
 }
-.el-pagination{
-  padding-bottom: 40px;
+.card-row{
+  width: 50%;
+}
+.card-row div{
+  font-size: 16px;
+  text-align: left;
+  padding: 10px 0;
+}
+.ma{
+  position: absolute;
+}
+.ma > img {
+    width: 150px;
 }
 
+.btn-del {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.el-table .el-table__cell {
+  padding: 8px 0;
+}
+.el-pagination {
+  padding-bottom: 40px;
+}
 </style>
 <style>
-  .font-white .el-form-item__label{
-    color: white  ;
-  }
+.font-white .el-form-item__label {
+  color: white;
+}
+
+/* 弹窗 */
+.el-dialog__header {
+  text-align: left;
+  background: #234296;
+}
+.el-dialog__header span {
+  color: white;
+}
+
+.card .el-form-item__label{
+  font-size: 16px;
+  color: #224997;
+}
+ .el-radio__label{
+   font-size: 16px;
+ }
 </style>
 
 <script>
@@ -276,7 +289,7 @@ export default {
           message: res.msg,
           type: "error",
         });
-        //todo 
+        //todo
         //this.$router.replace("/login");
       }
     },
@@ -327,4 +340,3 @@ export default {
   },
 };
 </script>
-
