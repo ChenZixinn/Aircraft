@@ -59,7 +59,12 @@ export default {
       const res = api_logout();
       console.log(res);
       this.isLogin = false;
-      this.$router.replace("/login");
+      try {
+        this.$router.replace("/login");
+      } catch (error) {
+        console.log("app.vue:::"+error);
+      }
+      
     },
   },
   mounted() {
