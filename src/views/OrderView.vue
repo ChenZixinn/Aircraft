@@ -12,13 +12,15 @@
 </template>
 
 <style scoped>
-.order-box {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-
+.order{
   background: #00000080 ;
   min-height: 95vh;
+}
+.order-box {
+  padding: 30px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
   position: relative;
 }
 .mask{
