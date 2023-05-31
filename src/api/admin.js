@@ -1,7 +1,5 @@
-//登录相关的请求
-
 import axios from '../plugins/http.js'
-
+//登录相关的请求
 /**
  * 登出
  * @param username
