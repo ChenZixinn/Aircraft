@@ -1,6 +1,7 @@
 <template>
   <div class="ticket">
     <div class="mask"></div>
+    <!-- 搜索头 -->
     <div class="ticket-header">
       <el-form ref="form" :inline="true" :model="form" label-width="80px">
         <el-form-item label="出发地" class="font-white">
@@ -29,10 +30,8 @@
         </el-form-item>
       </el-form>
     </div>
-    <h1>请选择您的航班</h1>
-
-    <div class="ticket-box"></div>
-    <div class="ticket-header"></div>
+    <h3>请选择您的航班</h3>
+    <!-- 数据表格 -->
     <div class="table-box">
       <el-table :data="data" stripe class="table-data">
         <el-table-column prop="id" label="航班id" width="100">
@@ -60,6 +59,7 @@
       </el-table>
     </div>
 
+    <!-- 分页导航 -->
     <el-pagination
       background
       layout="prev, pager, next"
@@ -74,37 +74,31 @@
       >打开嵌套表单的 Dialog</el-button
     > -->
 
-    <el-dialog title="预定机票" :visible.sync="dialogFormVisible">
+    <el-dialog title="预定机票" :visible.sync="dialogFormVisible" width="500px">
       <el-form :model="dialogData">
         <div class="card">
           <div class="card-body">
-            <div class="card-left">
-              <div>{{ dialogData.fromCity }}</div>
-              <!-- <div>{{dialogData.departureTime}}</div> -->
+            <div class="card-row">
+              <div>航班号：<span class="red-font">{{ dialogData.number }}</span></div>
+              <div>出发站：<span class="red-font">{{ dialogData.fromCity }}</span></div>
+              
             </div>
-            <div class="card-center">
-              <div>航班号：{{ dialogData.number }}</div>
-              <el-divider></el-divider>
-              <div>状态：{{ dialogData.status }}</div>
-            </div>
-            <div class="card-right">
-              <div>{{ dialogData.targetCity }}</div>
-              <!-- <div>{{dialogData.arrivalTime}}</div> -->
+            <div class="card-row">
+              <div>登机时间：<span class="red-font">{{ dialogData.departureTime }}</span></div>
+              <div>到达站：<span class="red-font">{{ dialogData.targetCity }}</span></div>
             </div>
           </div>
         </div>
-        <el-form-item label="座位类型">
+        <el-form-item label="座位类型:" class="card">
           <el-radio-group v-model="dialogData.type">
-            <el-radio label="商务座"></el-radio>
-            <el-radio label="一等座"></el-radio>
-            <el-radio label="二等座"></el-radio>
+            <el-radio :label="`商务座(${dialogData.businessClass})`"></el-radio>
+            <el-radio :label="`一等座(${dialogData.firstClass})`"></el-radio>
+            <el-radio :label="`二等座(${dialogData.secondClass})`"></el-radio>
           </el-radio-group>
-          <!-- <el-select v-model="dialogData.type" placeholder="请选择活动区域">
-            <el-option label="商务座" value="business"></el-option>
-            <el-option label="一等座" value="first"></el-option>
-            <el-option label="二等座" value="second"></el-option>
-          </el-select> -->
         </el-form-item>
+        <div class="ma">
+          <img src="../assets/ma.webp" alt="ma">
+        </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -115,14 +109,15 @@
 </template>
 
 <style scoped>
-
-h1{
-  color: white;
+.red-font{
+  color: red;
 }
 h3 {
-  margin: 40px 0 0;
-  
+  color: white;
 }
+/* h3 {
+  margin: 40px 0 0;
+} */
 ul {
   list-style-type: none;
   padding: 0;
@@ -135,22 +130,51 @@ a {
   color: #42b983;
 }
 
-.card {
-  width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  padding: 30px 0;
-  margin: 10px auto;
+.ticket {
+  background: #00000080;
+  min-height: 91vh;
+  padding-top: 30px;
   position: relative;
 }
-.card-body {
-  display: flex;
-  align-items: center;
-}
-.card-left,
-.card-center,
-.card-right {
+.mask {
+  position: absolute;
   width: 100%;
+  height: 100%;
+  background: url(../assets/bg.png) no-repeat fixed;
+  background-size: 100% 100%;
+  top: -30px;
+  z-index: -999;
+}
+.table-box {
+  /* display: flex;
+  justify-content: center; */
+  margin-bottom: 20px;
+}
+.table-data {
+  width: 90%;
+  margin: 0 auto;
+  min-height: 60vh;
+  border-radius: 10px;
+}
+
+/* 弹窗 */
+.card-body{
+  display: flex;
+  justify-content: left;
+}
+.card-row{
+  width: 50%;
+}
+.card-row div{
+  font-size: 16px;
+  text-align: left;
+  padding: 10px 0;
+}
+.ma{
+  position: absolute;
+}
+.ma > img {
+    width: 150px;
 }
 
 .btn-del {
@@ -159,40 +183,34 @@ a {
   right: 10px;
 }
 
-.ticket{
-  background: #00000080 ;
-  height: 93vh;
-  padding-top: 30px;
-  position: relative;
-
+.el-table .el-table__cell {
+  padding: 8px 0;
 }
-.mask{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: url(../assets/bg.png) no-repeat;
-  background-size: 100% auto;
-  top: -30px;
-  z-index: -999;
+.el-pagination {
+  padding-bottom: 40px;
 }
-.table-box{
-  /* display: flex;
-  justify-content: center; */
-  margin-bottom: 20px;
-  
-}
-.table-data{
-  width: 90%;
-  margin: 0 auto;
-  height: 60vh;
-  border-radius: 10px;
-}
-
 </style>
 <style>
-  .font-white .el-form-item__label{
-    color: white  ;
-  }
+.font-white .el-form-item__label {
+  color: white;
+}
+
+/* 弹窗 */
+.el-dialog__header {
+  text-align: left;
+  background: #234296;
+}
+.el-dialog__header span {
+  color: white;
+}
+
+.card .el-form-item__label{
+  font-size: 16px;
+  color: #224997;
+}
+ .el-radio__label{
+   font-size: 16px;
+ }
 </style>
 
 <script>
@@ -270,6 +288,8 @@ export default {
           message: res.msg,
           type: "error",
         });
+        //todo
+        //this.$router.replace("/login");
       }
     },
     clear() {
@@ -285,7 +305,18 @@ export default {
       });
     },
     async pageChange() {
-      const { data: res } = await api_getTicket(this.nowPage);
+      if (!this.form.fromCity) {
+        this.form.fromCity = null;
+      }
+      if (!this.form.targetCity) {
+        this.form.targetCity = null;
+      }
+      const { data: res } = await api_getTicket(
+        this.form.fromCity,
+        this.form.targetCity,
+        this.form.date1,
+        this.nowPage
+      );
       this.data = res.records;
     },
     buyTicket(index, row) {
@@ -319,4 +350,3 @@ export default {
   },
 };
 </script>
-

@@ -1,13 +1,10 @@
 <template>
   <div class="demo-type">
-    <div>
-      <!-- test
-      <img src="" alt="头像" width="100" height="100"> -->
+    <h1>欢迎：{{ user.username }}</h1>
+    <div class="show-admin-box">
       <el-avatar
         src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
       ></el-avatar>
-    </div>
-    <div class="show-admin-box">
       <div class="show-admin">
         <p>用户：</p>
         <p>{{ user.username }}</p>
@@ -28,28 +25,47 @@
         <p>密码：</p>
         <p>{{ user.password }}</p>
       </div>
-    </div>
-
-    <el-row>
+      <el-row>
       <el-button
+        class="btn-edit"
         @click="test()"
-        type="primary"
+        type="success"
         icon="el-icon-edit"
         circle
       ></el-button>
     </el-row>
+    </div>
+
+    
   </div>
 </template>
 
 <style scoped>
+.demo-type{
+   height: 93vh;
+   background: #1380d2;
+   background-image: url(../assets/bg-register.png);
+   background-size:100% 100%;  
+   background-repeat: no-repeat;
+   background-position: center;
+   position: relative;
+}
 .show-admin-box {
-  width: 500px;
-  margin: 30px auto;
+  width: 400px;
+  position: absolute;
+  right: 26%;
+  top: 23%;
+}
+h1{
+  color: white;
+  margin: 0;
+  padding-top: 110px;
 }
 .show-admin {
   display: flex;
   justify-content: center;
   border-bottom: 1px solid;
+  color: white;
 }
 
 .show-admin p:nth-child(1) {
@@ -59,6 +75,10 @@
 .show-admin p:nth-child(2) {
   min-width: 200px;
 }
+.btn-edit{
+  margin-top: 20px;
+}
+
 </style>
 
 <script>

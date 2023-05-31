@@ -1,6 +1,7 @@
 <template>
   <div class="order">
-    <h1>This is an Order page</h1>
+    <div class="mask"></div>
+    <!-- <h1>This is an Order page</h1> -->
     <!-- <TicketCard msg="Welcome to Your Vue.js App"/> -->
     <div class="order-box">
       <HelloWorld :msg="order" v-for="order in orders" :key="order.id" />
@@ -11,10 +12,25 @@
 </template>
 
 <style scoped>
+.order{
+  background: #00000080 ;
+  min-height: 95vh;
+}
 .order-box {
+  padding: 30px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
+  position: relative;
+}
+.mask{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url(../assets/bg.png) no-repeat fixed;
+  background-size: 100% 100%;
+  top: -30px;
+  z-index: -999;
 }
 </style>
 

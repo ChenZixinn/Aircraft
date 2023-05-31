@@ -81,10 +81,13 @@ export function api_selectTicket(fromCity, targetCity, departureTime) {
     })
 }
 
-export function api_getTicket(x) {
+export function api_getTicket(fromCity,targetCity,departureTime,nowPage) {
     return axios.get('/ticket/list/', {
         params: {
-            pageNum: x
+            fromCity: fromCity,
+            targetCity: targetCity,
+            departureTime: departureTime,
+            pageNum: nowPage
         }
     })
 }

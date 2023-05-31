@@ -1,5 +1,6 @@
 <template>
   <div class="card">
+    <p class="card-title">登机牌</p>
     <h3>{{ msg.number }}</h3>
     <div class="card-body">
       <div class="card-left">
@@ -29,29 +30,29 @@
       circle
     ></el-button>
 
-    <el-dialog title="取消机票" :visible.sync="dialogFormVisible">
+    <el-dialog title="取消机票" :visible.sync="dialogFormVisible" width="500px">
       <el-form :model="msg">
-        <div class="card" style="width: 870px">
+        <div class="dialog-card">
           <div class="card-body">
             <div class="card-left">
-              <div>{{ msg.fromCity }}</div>
+              <div class="font-style">{{ msg.fromCity }}</div>
               <!-- <div>{{dialogData.departureTime}}</div> -->
             </div>
             <div class="card-center">
-              <div>航班号：{{ msg.number }}</div>
+              <div class="font-style">航班号：{{ msg.number }}</div>
               <el-divider></el-divider>
-              <div>状态：{{ msg.status }}</div>
+              <div class="font-style">状态：{{ msg.status }}</div>
             </div>
             <div class="card-right">
-              <div>{{ msg.targetCity }}</div>
+              <div class="font-style">{{ msg.targetCity }}</div>
               <!-- <div>{{dialogData.arrivalTime}}</div> -->
             </div>
           </div>
         </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirmCancleOrder(msg.id)"
+        <el-button @click="dialogFormVisible = false">返回</el-button>
+        <el-button type="danger" @click="confirmCancleOrder(msg.id)"
           >确定取消</el-button
         >
       </div>
@@ -117,11 +118,13 @@ a {
 }
 .card {
   width: 400px;
+  background: white;
   border: 1px solid #ccc;
   border-radius: 15px;
   padding-bottom: 30px;
   margin: 10px;
   position: relative;
+  overflow: hidden;
 }
 .card-body {
   display: flex;
@@ -137,5 +140,15 @@ a {
   position: absolute;
   top: 10px;
   right: 10px;
+}
+.card-title{
+  margin: 0;
+  background: #234296;
+  color: white;
+  text-align: left;
+  padding: 10px;
+}
+.font-style{
+  font-size: 16px;
 }
 </style>
