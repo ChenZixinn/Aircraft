@@ -52,7 +52,12 @@ const routes = [
     path: '/more',
     name: 'more',
     component: () => import('../views/MoreView.vue')
-  }
+  },
+  {
+    path: '/manage',
+    name: 'manage',
+    component: () => import('../views/ManageView.vue')
+  },
 ]
 
 const router = new VueRouter({

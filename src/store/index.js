@@ -14,6 +14,7 @@ export default new Vuex.Store({
       username: 'pande',
     },
     isLogin: false,
+    isMange: false,
   },
   getters: {},
   mutations: {
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     changeLoginState(state, x) {
       console.log("store:::::123", x);
       state.isLogin = x;
+    },
+    changeMange(state,x){
+      state.isMange = x;
     }
 
   },

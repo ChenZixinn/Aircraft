@@ -5,8 +5,8 @@
         <el-form-item label="用户" class="font-white">
           <el-input v-model="form.username"></el-input>
         </el-form-item>
-        <el-form-item label="密码" class="font-white">
-          <el-input v-model="form.password"></el-input>
+        <el-form-item  label="密码" class="font-white">
+          <el-input type="password" v-model="form.password"></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -84,14 +84,23 @@ export default {
       if (res.msg == "SUCCESS") {
         this.$parent.isLogin = true;
         this.$store.state.isLogin = true;
-        this.$store.commit("changeLoginState", true);
+        this.$store.commit("changeLoginState", true);  //无
         console.log("记录数据跳转到个人中心");
-        this.$store.commit("updateUserInfo", res.data);
+        this.$store.commit("updateUserInfo", res.data);  // 无
         console.log(this.$store.state.userInfo);
         // this.$router.go(0);
+        this.$cookies.set('isLogin',true,'1D');
+
+        if(res.data.username == "pande"){
+          console.log("管理员");
+          this.$cookies.set('manage',true,'1D');//默认一天过期
+          this.$store.commit("changeMange", true);
+        }else{
+          this.$cookies.remove("manage");
+        }
 
         //  跳转
-
+        //location.reload();
         this.$router.replace("/admin");
       } else {
         //提示框
