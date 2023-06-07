@@ -91,7 +91,12 @@ export default {
         // this.$router.go(0);
         this.$cookies.set('isLogin',true,'1D');
 
-        if(res.data.username == "pande"){
+        //3.保存token到sessionStorage
+        const token = res.data.role;
+        window.sessionStorage.setItem("token",token) //对话结束后消除
+
+
+        if(res.data.role == "ROLE_ADMIN"){
           console.log("管理员");
           this.$cookies.set('manage',true,'1D');//默认一天过期
           this.$store.commit("changeMange", true);

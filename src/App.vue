@@ -41,7 +41,7 @@ export default {
     async init() {
       // const res = await api_getAllOrder();
       // console.log(res);
-      console.log("app::::::");
+      console.log("app init::::::");
       this.isLogin = this.$store.state.isLogin;
       this.isManage = this.$store.state.isManage;
       console.log(this.isLogin);
@@ -74,7 +74,9 @@ export default {
       console.log(res);
       this.isLogin = false;
       try {
+        window.sessionStorage.setItem("token","") //对话结束后消除
         this.$cookies.remove("isLogin"); // 删除登录状态
+        
         if(this.$cookies.remove("manage")){
             this.$cookies.remove("manage"); // 删除登录状态
         }
