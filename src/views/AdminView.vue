@@ -21,10 +21,10 @@
         <p>姓名：</p>
         <p>{{ user.realName }}</p>
       </div>
-      <div class="show-admin">
+      <!-- <div class="show-admin">
         <p>密码：</p>
         <p>{{ user.password }}</p>
-      </div>
+      </div> -->
       <el-row>
       <el-button
         class="btn-edit"
