@@ -142,16 +142,16 @@
         <el-form-item label="航班号" class="">
           <el-input v-model="dialogData.number"></el-input>
         </el-form-item>
-        <el-form-item label="出发地" class="">
-          <el-input v-model="dialogData.fromCity"></el-input>
+        <el-form-item label="价格" class="">
+          <el-input v-model="dialogData.price"></el-input>
         </el-form-item>
       </div>
       <div>
+        <el-form-item label="出发地" class="">
+          <el-input v-model="dialogData.fromCity"></el-input>
+        </el-form-item>
         <el-form-item label="目的地" class="">
           <el-input v-model="dialogData.targetCity"></el-input>
-        </el-form-item>
-        <el-form-item label="价格" class="">
-          <el-input v-model="dialogData.price"></el-input>
         </el-form-item>
       </div>
       <el-form-item label="状态" class="">
@@ -161,28 +161,28 @@
           <el-col :span="11">
             <el-date-picker
               type="date"
-              value-format="yyyy-MM-dd HH:mm"
+              value-format="yyyy-MM-dd"
               placeholder="选择日期"
-              v-model="dialogData.date1"
+              v-model="date1"
             ></el-date-picker>
           </el-col>
           <!-- <el-col class="line" :span="2">-</el-col> -->
           <el-col :span="11">
-            <el-time-picker placeholder="选择时间" v-model="time2" style="width: 100%;"></el-time-picker>
+            <el-time-picker placeholder="选择时间" v-model="time1" format = 'HH:mm' value-format="HH:mm"  style="width: 100%;"></el-time-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="到达时间" class="">
           <el-col :span="11">
             <el-date-picker
               type="date"
-              value-format="yyyy-MM-dd HH:mm"
+              value-format="yyyy-MM-dd"
               placeholder="选择日期"
-              v-model="dialogData.date2"
+              v-model="date2"
             ></el-date-picker>
           </el-col>
           <!-- <el-col class="line" :span="2">-</el-col> -->
           <el-col :span="11">
-            <el-time-picker placeholder="选择时间" v-model="time2" style="width: 100%;"></el-time-picker>
+            <el-time-picker placeholder="选择时间" v-model="time2" format = 'HH:mm' value-format="HH:mm" style="width: 100%;"></el-time-picker>
           </el-col>
         </el-form-item>
         <!-- <el-form-item label="状态">
@@ -345,8 +345,10 @@ export default {
         price: "",
         status: "",
       },
-      time1: "",
-      time2: "",
+      date1: "2023-6-6",
+      date2: "2023-6-6",
+      time1: "00:00",
+      time2: "00:00",
       pages: 0, //总页数
       nowPage: 0,
       dialogFormVisible: false,
@@ -444,7 +446,7 @@ export default {
         price: "",
         status: "",
       };
-      //console.log("addTicket::::", row);
+      
       // console.log("test::::", this.data[index].id);
       ///this.dialogData = this.data[index];
       
@@ -458,6 +460,14 @@ export default {
       console.log("test::::", this.data[index].id);
       this.dialogData = this.data[index];
       console.log(this.dialogData);
+
+      this.date1 =  this.dialogData.departureTime.toString().substring(0,10);
+      this.time1 = this.dialogData.departureTime.toString().substring(11,16)
+
+      this.date2 =  this.dialogData.arrivalTime.toString().substring(0,10);
+      this.time2 = this.dialogData.arrivalTime.toString().substring(11,16)
+
+
       this.updatedialogFormVisible = true;
     },
     //confirmAddTicket  confirmUpdateTicket
@@ -468,8 +478,28 @@ export default {
         // todo 
         this.dialogData.businessClass = "200", //座位
         this.dialogData.firstClass = "200",
-        this.dialogData.secondClass = "200",
+        this.dialogData.secondClass = "200";
 
+        if(this.time1 == ""){
+          this.time1 = "00:00"
+        }else{
+          this.time1 = this.time1.toString().substring(15,21)
+        }
+
+        if(this.time2 == ""){
+          this.time2 = "00:00"
+        }else{
+          this.time2 = this.time2.toString().substring(15,21)
+        }
+
+        this.dialogData.departureTime = this.date1.toString().substring(0,10) +" "+ this.time1;
+        this.dialogData.arrivalTime  = this.date2.toString().substring(0,10) +" "+ this.time2;
+
+        this.date1 = "";
+        this.date2 = "";
+        this.time1 = "";
+        this.time2 = "";
+        
         console.log(this.dialogData);
         const res = await api_ticketAdd(this.dialogData);
         console.log(res);
@@ -490,6 +520,14 @@ export default {
         console.log(this.dialogData);
         this.updatedialogFormVisible = false;
         //todo
+        if(this.date1 != ""){
+          this.dialogData.departureTime = this.date1.toString().substring(0,10) +" "+ this.time1.toString().substring(15,21);
+        }
+        if(this.date2 != ""){
+          this.dialogData.arrivalTime  = this.date2.toString().substring(0,10) +" "+ this.time2.toString().substring(15,21);
+        }
+
+
         console.log(this.dialogData);
          const res = await api_ticketUpdate(this.dialogData);
          console.log(res);
