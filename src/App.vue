@@ -6,7 +6,7 @@
       <div class="nav-left">
         <router-link class="link" to="/ticket">机票</router-link>
         <router-link class="link" to="/order">订单管理</router-link>
-        <!-- <router-link class="link" to="/more">航班详情</router-link> -->
+        <router-link class="link" to="/manage" v-if="isManage">机票管理</router-link>
       </div>
 
       <div class="nav-right">
@@ -14,9 +14,12 @@
           >登录</router-link
         >
         <router-link class="link" to="/admin" v-show="isLogin"
-          >用户信息页</router-link
+          >用户信息页 {{userInfo.username}}</router-link
         >
-        <a class="link" href="#" @click="logout" v-show="isLogin">退出登陆</a>
+        <!-- <router-link class="link" to="/login" @click="logout" v-show="isLogin"
+          >退出登陆</router-link
+        > -->
+        <a class="link" href="" @click="logout" v-show="isLogin">退出登陆</a>
       </div>
     </nav>
     <router-view />
@@ -31,27 +34,38 @@ export default {
     return {
       isLogin: false,
       userInfo: {},
+      isManage: false
     };
   },
   methods: {
     async init() {
       // const res = await api_getAllOrder();
       // console.log(res);
-      console.log("app::::::");
+      console.log("app init::::::");
       this.isLogin = this.$store.state.isLogin;
+      this.isManage = this.$store.state.isManage;
       console.log(this.isLogin);
 
       const res = await api_userinfo();
       console.log("登陆状态");
       console.log(res);
-      if (res.status == 10000) {
-        this.$store.state.userInfo = res.data;
-        this.userInfo = res.data;
-        this.isLogin = true;
-      } else {
-        this.isLogin = false;
-        this.userInfo = null;
-      }
+
+      console.log(this.$cookies.get("manage"));
+      console.log(this.$cookies.get("isLogin"));
+
+      this.isLogin = this.$cookies.get("isLogin")
+      this.isManage = this.$cookies.get("manage")
+
+      // if (res.status == 10000) {
+      //   this.$store.state.userInfo = res.data;
+      //   this.userInfo = res.data;
+      //   this.isLogin = true;
+      //   // this.isManage = 
+      //   console.log(this.userInfo.username);
+      // } else {
+      //   this.isLogin = false;
+      //   this.userInfo = {};
+      // }
     },
 
     logout() {
@@ -60,7 +74,14 @@ export default {
       console.log(res);
       this.isLogin = false;
       try {
-        this.$router.replace("/login");
+        window.sessionStorage.setItem("token","") //对话结束后消除
+        this.$cookies.remove("isLogin"); // 删除登录状态
+        
+        if(this.$cookies.remove("manage")){
+            this.$cookies.remove("manage"); // 删除登录状态
+        }
+        
+        this.$router.push("/login").catch(err => { console.log(err)});
       } catch (error) {
         console.log("app.vue:::"+error);
       }

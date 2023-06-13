@@ -28,8 +28,8 @@ export function api_info() {
 // ******************************   用户模块
 // 登录
 export function api_login(data) {
-    console.log(data.username);
-    console.log(data.password);
+    // console.log(data.username);
+    // console.log(data.password);
     return axios.post("/login?username=" + data.username + "&password=" + data.password + "&remember-me=" + true, {
 
     })
@@ -91,6 +91,60 @@ export function api_getTicket(fromCity,targetCity,departureTime,nowPage) {
         }
     })
 }
+
+// /api/ticket/cancel
+//机票删除
+export function api_ticketDel(data) {
+
+    return axios.post("/ticket/cancel", {}, {
+        params: {
+            ticketId: data.id,
+        }
+    })
+}
+
+//机票添加
+export function api_ticketAdd(data) {  
+
+    return axios.post("/ticket/create", {}, {
+        params: {
+            arrivalTime: data.arrivalTime,
+            businessClass: data.businessClass,
+            departureTime: data.departureTime,
+            firstClass: data.firstClass,
+            fromCity: data.fromCity,
+            id: data.id,
+            number: data.number,
+            price: data.price,
+            secondClass: data.secondClass,
+            status: data.status,
+            targetCity: data.targetCity,
+        }
+    })
+}
+//机票更新
+export function api_ticketUpdate(data) {
+
+    console.log(data.arrivalTime);
+    console.log(data.departureTime);
+
+    return axios.post("/ticket/update", {}, {
+        params: {
+            arrivalTime: data.arrivalTime,
+            businessClass: data.businessClass,
+            departureTime: data.departureTime,
+            firstClass: data.firstClass,
+            fromCity: data.fromCity,
+            id: data.id,
+            number: data.number,
+            price: data.price,
+            secondClass: data.secondClass,
+            status: data.status,
+            targetCity: data.targetCity,
+        }
+    })
+}
+
 
 export function api_getALlTicket() {
     return axios.get('/ticket/list')
