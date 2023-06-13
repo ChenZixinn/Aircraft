@@ -34,14 +34,14 @@
 </template>
 
 <style scoped>
-.update-view-box{
-   height: 93vh;
-   background: #1380d2;
-   background-image: url(../assets/bg-register.png);
-   background-size:100% 100%;  
-   background-repeat: no-repeat;
-   background-position: center;
-   position: relative;
+.update-view-box {
+  height: 93vh;
+  background: #1380d2;
+  background-image: url(../assets/bg-register.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
 }
 .update-view {
   width: 400px;
@@ -49,14 +49,14 @@
   right: 26%;
   top: 23%;
 }
-h3{
+h3 {
   color: white;
 }
 </style>
 <style>
-  .font-white .el-form-item__label{
-    color: white;
-  }
+.font-white .el-form-item__label {
+  color: white;
+}
 </style>
 
 <script>
@@ -107,6 +107,7 @@ export default {
   },
   mounted() {
     this.form = this.$store.state.userInfo;
+    this.form.password = "";
   },
 };
 </script>

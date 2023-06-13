@@ -23,32 +23,30 @@
       </div>
       <div class="show-admin">
         <p>密码：</p>
-        <p>{{ user.password }}</p>
+        <p>******</p>
       </div>
       <el-row>
-      <el-button
-        class="btn-edit"
-        @click="test()"
-        type="success"
-        icon="el-icon-edit"
-        circle
-      ></el-button>
-    </el-row>
+        <el-button
+          class="btn-edit"
+          @click="test()"
+          type="success"
+          icon="el-icon-edit"
+          circle
+        ></el-button>
+      </el-row>
     </div>
-
-    
   </div>
 </template>
 
 <style scoped>
-.demo-type{
-   height: 93vh;
-   background: #1380d2;
-   background-image: url(../assets/bg-register.png);
-   background-size:100% 100%;  
-   background-repeat: no-repeat;
-   background-position: center;
-   position: relative;
+.demo-type {
+  height: 93vh;
+  background: #1380d2;
+  background-image: url(../assets/bg-register.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
 }
 .show-admin-box {
   width: 400px;
@@ -56,7 +54,7 @@
   right: 26%;
   top: 23%;
 }
-h1{
+h1 {
   color: white;
   margin: 0;
   padding-top: 110px;
@@ -75,10 +73,9 @@ h1{
 .show-admin p:nth-child(2) {
   min-width: 200px;
 }
-.btn-edit{
+.btn-edit {
   margin-top: 20px;
 }
-
 </style>
 
 <script>
